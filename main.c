@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main() {
-    FILE* file = fopen("/home/izobretatel777/GitHub/ambiglyph-server/src/main/resources/application.yml", "r");
+    FILE* file = fopen("invoice.yaml", "r");
     YamlParser* yamlParser = yamlParserConstructor(file);
     yamlParser->parse(yamlParser);
     yamlParserDestructor(yamlParser);

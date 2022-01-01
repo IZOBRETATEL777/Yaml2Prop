@@ -17,8 +17,8 @@ struct Chain {
     Scalar* (*front)(struct Chain*);
     void (*pop_front)(struct Chain*);
     void (*pop_back)(struct Chain*);
-    void (*push_front)(struct Chain*, char*, char*);
-    void (*push_back)(struct Chain*, char*, char*);
+    void (*push_front)(struct Chain*, char*);
+    void (*push_back)(struct Chain*, char*);
 
 };
 

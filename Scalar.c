@@ -5,11 +5,10 @@
 #include "Scalar.h"
 #include <stdlib.h>
 
-Scalar* scalarConstructor(char* type, char* data) {
+Scalar* scalarConstructor(char* data) {
     Scalar *scalar = (Scalar* )malloc(sizeof(Scalar));
     scalar->next = NULL;
     scalar->prev = NULL;
-    scalar->type = type;
     scalar->data = data;
     return scalar;
 }
