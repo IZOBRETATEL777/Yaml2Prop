@@ -9,7 +9,8 @@ Scalar* scalarConstructor(char* data) {
     Scalar *scalar = (Scalar* )malloc(sizeof(Scalar));
     scalar->next = NULL;
     scalar->prev = NULL;
-    scalar->data = data;
+    scalar->data = stringConstructor();
+    scalar->data->setData(scalar->data, data);
     return scalar;
 }
 

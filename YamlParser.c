@@ -3,10 +3,17 @@
 //
 
 #include "YamlParser.h"
+#include "Chain.h"
 #include <stdlib.h>
 #include <yaml.h>
 
 void parse(YamlParser *self) {
+
+    Chain* document[100];
+    int curIdx = 0;
+    Chain* chain = chainConstructor();
+    bool isValue = false;
+
     yaml_parser_t parser;
     yaml_token_t token;
 
@@ -27,11 +34,11 @@ void parse(YamlParser *self) {
 
                 /* Token types (read before actual token) */
             case YAML_KEY_TOKEN:
-                printf("(Key token)   ");
+                isValue = false;
                 break;
 
             case YAML_VALUE_TOKEN:
-                printf("(Value token) ");
+                isValue = true;
                 break;
 
                 /* Block delimeters */
@@ -44,7 +51,8 @@ void parse(YamlParser *self) {
                 break;
 
             case YAML_BLOCK_END_TOKEN:
-                puts("<b>End block</b>");
+                puts("End block");
+                chain->pop_back(chain);
                 break;
 
                 /* Data */
@@ -53,7 +61,15 @@ void parse(YamlParser *self) {
                 break;
 
             case YAML_SCALAR_TOKEN:
-                printf("scalar %s \n", token.data.scalar.value);
+                chain->push_back(chain, token.data.scalar.value);
+                if (isValue) {
+                    document[curIdx] = chainConstructor();
+                    debug(chain);
+                    document[curIdx] = chain->getCopy(chain);
+                    curIdx++;
+                    chain->pop_back(chain);
+                    chain->pop_back(chain);
+                }
                 break;
 
                 /* Others */
@@ -63,7 +79,9 @@ void parse(YamlParser *self) {
         if (token.type != YAML_STREAM_END_TOKEN)
             yaml_token_delete(&token);
     } while (token.type != YAML_STREAM_END_TOKEN);
-
+    for (int i = 0; i < curIdx; i++) {
+        debug(document[i]);
+    }
     yaml_token_delete(&token);
     yaml_parser_delete(&parser);
 }

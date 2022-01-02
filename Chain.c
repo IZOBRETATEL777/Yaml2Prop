@@ -3,7 +3,7 @@
 //
 
 #include "Chain.h"
-#include <stdio.h>s
+#include <stdio.h>
 #include <stdlib.h>
 
 void debug(Chain* self) {
@@ -12,10 +12,23 @@ void debug(Chain* self) {
     }
     Scalar *scalar = self->front_tail;
     while (scalar != NULL) {
-        printf("%s->", scalar->data);
+        printf("%s->", scalar->data->data);
         scalar = scalar->next;
     }
     printf("_______\n");
+}
+
+Chain* getCopy(Chain* self) {
+    if (self == NULL) {
+        return NULL;
+    }
+    Chain* newChain = chainConstructor();
+    Scalar *curScalar = self->front_tail;
+    while (curScalar != NULL) {
+        newChain->push_back(newChain, curScalar->data->data);
+        curScalar = curScalar->next;
+    }
+    return newChain;
 }
 
 bool empty(Chain* self) {
@@ -76,10 +89,10 @@ void pop_front(Chain* self) {
 }
 
 void pop_back(Chain* self) {
+//    debug(self);
     if (empty(self)) {
         return;
     }
-//	debug(self);
     Scalar* scalar = self->back_tail;
     self->back_tail = scalar->prev;
     if (self->back_tail == NULL)
@@ -101,6 +114,7 @@ Chain* chainConstructor() {
     self->push_back = push_back;
     self->push_front = push_front;
     self->empty = empty;
+    self->getCopy = getCopy;
     return self;
 }
 

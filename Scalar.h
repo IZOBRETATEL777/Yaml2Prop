@@ -3,8 +3,11 @@
 //
 #ifndef YAML2PROP_SCALAR_H
 #define YAML2PROP_SCALAR_H
+
+#include "String.h"
+
 struct Scalar {
-    char* data;
+    String* data;
     struct Scalar* prev;
     struct Scalar* next;
 };
