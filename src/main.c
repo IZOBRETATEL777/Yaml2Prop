@@ -6,5 +6,6 @@ int main() {
     YamlParser* yamlParser = yamlParserConstructor(file);
     yamlParser->parse(yamlParser);
     yamlParserDestructor(yamlParser);
+    fclose(file);
     return 0;
 }

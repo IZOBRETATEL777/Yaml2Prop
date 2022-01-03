@@ -21,11 +21,10 @@ void add(ChainList* self, Chain* chain) {
         for (int i = 0; i < self->length; i++) {
             newData[i] = self->data[i]->getChainCopy(self->data[i]);
         }
-//        free(self->data);
+        free(self->data);
         self->data = newData;
     }
     self->data[self->length] = chain->getChainCopy(chain);
-//    self->data[self->length] = chain;
     self->length++;
 }
 

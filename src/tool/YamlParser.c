@@ -90,6 +90,9 @@ void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSe
                 chain->back(chain)->sequences = subChainList;
                 chainList->add(chainList, chain);
                 chain->pop_back(chain);
+
+                chainListDestructor(subChainList);
+                chainDestructor(subChain);
             }
 
             break;
@@ -119,6 +122,8 @@ void parse(YamlParser *self) {
     parsing(&parser, &token, chain, 0, 0, chainList, false);
     puts("Finished");
     chainList->debugChainList(chainList);
+    chainListDestructor(chainList);
+    chainDestructor(chain);
     yaml_token_delete(&token);
     yaml_parser_delete(&parser);
 }
