@@ -8,8 +8,13 @@
 
 struct Scalar {
     String* data;
+    bool isValue;
+    bool hasSequences;
     struct Scalar* prev;
     struct Scalar* next;
+    struct ChainList* sequences;
+    void (*debugScalar) (struct Scalar*);
+    struct Scalar* (*getScalarCopy) (struct Scalar*)
 };
 typedef struct Scalar Scalar;
 Scalar* scalarConstructor(char*);

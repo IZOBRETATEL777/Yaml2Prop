@@ -19,14 +19,14 @@ struct Chain {
     void (*pop_back)(struct Chain*);
     void (*push_front)(struct Chain*, char*);
     void (*push_back)(struct Chain*, char*);
-    struct Chain* (*getCopy)(struct Chain*);
+    struct Chain* (*getChainCopy)(struct Chain*);
+    void (*debugChain) (struct Chain*);
 };
 
 typedef struct Chain Chain;
 
 Chain* chainConstructor();
 void chainDestructor(Chain*);
-void debug(Chain* self);
 
 
 #endif //YAML2PROP_CHAIN_H
