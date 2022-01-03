@@ -17,6 +17,8 @@ struct  String {
     void (*print) (struct String*, FILE*, char[], char[]);
     void (*append) (struct String*, char);
     void (*shrinkToFit) (struct String*);
+    bool (*equals) (struct String*, struct String*);
+    bool (*equalsCharArray) (struct String*, char[]);
     size_t (*size)(struct String*);
 };
 

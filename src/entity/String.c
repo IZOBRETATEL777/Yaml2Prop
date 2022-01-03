@@ -38,6 +38,14 @@ void print(String* self, FILE* out, char sep[], char end[]) {
 
 }
 
+bool equals (String* self, String* string) {
+    return strcmp(self->data, string->data) == 0;
+}
+
+bool equalsCharArray (String* self, char array[]) {
+    return strcmp(self->data, array) == 0;
+}
+
 void append(String* self, char c) {
     if (self->length >= self->capacity) {
         char* newData = (char* ) malloc(sizeof(char) * self->capacity * 2);
@@ -79,6 +87,8 @@ String* stringConstructor() {
     string->append = append;
     string->size = size;
     string->shrinkToFit = shrinkToFit;
+    string->equals = equals;
+    string->equalsCharArray = equalsCharArray;
     return string;
 }
 

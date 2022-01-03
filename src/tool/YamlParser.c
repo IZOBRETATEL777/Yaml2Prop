@@ -107,7 +107,7 @@ void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSe
     parsing(parser, token, chain, isSequence, isValue, chainList, false);
 }
 
-void parse(YamlParser *self) {
+ChainList* parse(YamlParser* self) {
 
     ChainList* chainList = chainListConstructor();
     Chain* chain = chainConstructor();
@@ -120,12 +120,10 @@ void parse(YamlParser *self) {
     yaml_parser_set_input_file(&parser, self->file);
 
     parsing(&parser, &token, chain, 0, 0, chainList, false);
-    puts("Finished");
-    chainList->debugChainList(chainList);
-    chainListDestructor(chainList);
     chainDestructor(chain);
     yaml_token_delete(&token);
     yaml_parser_delete(&parser);
+    return chainList;
 }
 
 YamlParser *yamlParserConstructor(FILE *file) {

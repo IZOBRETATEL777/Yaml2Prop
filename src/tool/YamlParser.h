@@ -7,7 +7,7 @@
 
 struct YamlParser {
     FILE* file;
-    void (*parse) (struct YamlParser*);
+    struct ChainList* (*parse) (struct YamlParser*);
 };
 typedef struct YamlParser YamlParser;
 YamlParser* yamlParserConstructor(FILE* file);
