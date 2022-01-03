@@ -3,9 +3,9 @@
 //
 
 #include "YamlParser.h"
-#include "Scalar.h"
-#include "Chain.h"
-#include "ChainList.h"
+#include "../entity/Scalar.h"
+#include "../entity/Chain.h"
+#include "../entity/ChainList.h"
 #include <stdlib.h>
 #include <yaml.h>
 
