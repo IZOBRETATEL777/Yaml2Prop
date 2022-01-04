@@ -36,7 +36,7 @@ jobs:
         run: |
           cmake . -DCMAKE_BUILD_TYPE=Release
           cmake --build . --config Release -j4
-          mv /bin/Yaml2Prop /bin/Yaml2Prop-macos
+          mv bin/Yaml2Prop bin/Yaml2Prop-macos
 
       - name: Build Windows executable
         if: matrix.os == 'windows-latest'
