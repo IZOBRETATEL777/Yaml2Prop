@@ -26,10 +26,17 @@ jobs:
           echo ::set-output name=VERSION::$VERSION
 
       - name: Build Linux executable
-        if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'
+        if: matrix.os == 'ubuntu-20.04'
         run: |
           cmake . -DCMAKE_BUILD_TYPE=Release
           cmake --build . --config Release -j4
+
+      - name: Build MacOS executable
+        if: matrix.os == 'macos-latest'
+        run: |
+          cmake . -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release -j4
+          mv /bin/Yaml2Prop /bin/Yaml2Prop-macos
 
       - name: Build Windows executable
         if: matrix.os == 'windows-latest'
@@ -41,7 +48,7 @@ jobs:
         if: matrix.os == 'ubuntu-20.04'
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}/bin/YAML2Prop
+          files: ${{ github.workspace }}/bin/Yaml2Prop
           name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
           draft: false
         env:
@@ -51,7 +58,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}/bin/YAML2Prop
+          files: ${{ github.workspace }}/bin/Yaml2Prop-macos
           name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
           draft: false
         env:
@@ -61,7 +68,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}/bin/YAML2Prop.exe
+          files: ${{ github.workspace }}\bin\Yaml2Prop.exe
           name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
           draft: false
         env:
