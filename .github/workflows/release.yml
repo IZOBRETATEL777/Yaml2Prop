@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Get the version
+        id: get_version
+        shell: bash
+        run: |
+          VERSION=${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=VERSION::$VERSION
+
+      - name: Build Linux executable
+        if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'
+        run: |
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release -j4
+
+      - name: Build Windows executable
+        if: matrix.os == 'windows-latest'
+        run: |
+          cmake .. -A ${{ matrix.config.platform }}
+          cmake --build . --config Release -j4
+
+      - name: Create Linux executable release
+        if: matrix.os == 'ubuntu-20.04'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.workspace }}/bin/YAML2Prop
+          name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create MacOS executable release
+        if: matrix.os == 'macos-latest'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.workspace }}/bin/YAML2Prop
+          name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Windows executable release
+        if: matrix.os == 'windows-latest'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.workspace }}/bin/YAML2Prop.exe
+          name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
