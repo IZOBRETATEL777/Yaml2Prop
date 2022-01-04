@@ -34,7 +34,7 @@ jobs:
       - name: Build Windows executable
         if: matrix.os == 'windows-latest'
         run: |
-          cmake . -A ${{ matrix.config.platform }}
+          cmake . -A x64
           cmake --build . --config Release -j4
 
       - name: Create Linux executable release
@@ -57,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Windows executable release
+      - name: Create Windows (x64) executable release
         if: matrix.os == 'windows-latest'
         uses: softprops/action-gh-release@v1
         with:
