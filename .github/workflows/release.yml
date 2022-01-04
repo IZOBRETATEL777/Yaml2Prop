@@ -68,7 +68,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}\bin\Yaml2Prop.exe
+          files: ${{ github.workspace }}\bin\Release\Yaml2Prop.exe
           name: YAML2Prop ${{steps.get_version.outputs.VERSION}}
           draft: false
         env:
