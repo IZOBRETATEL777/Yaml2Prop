@@ -108,6 +108,7 @@ ChainList *parse(YamlParser *self) {
     ChainList *chainList = chainListConstructor();
     Chain *chain = chainConstructor();
     chain->push_back(chain, "START");
+    chain->back(chain)->isRoot = true;
 
     yaml_parser_t parser;
     yaml_token_t token;

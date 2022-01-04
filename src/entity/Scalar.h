@@ -10,6 +10,7 @@ struct Scalar {
     String *data;
     bool isValue;
     bool hasSequences;
+    bool isRoot;
     struct Scalar *prev;
     struct Scalar *next;
     struct ChainList *sequences;

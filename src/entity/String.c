@@ -39,11 +39,27 @@ void print(String *self, FILE *out, char sep[], char end[]) {
 }
 
 bool equals(String *self, String *string) {
-    return strcmp(self->data, string->data) == 0;
+    if (string == NULL && self == NULL) {
+        return true;
+    }
+    else if (string == NULL || self == NULL) {
+        return false;
+    }
+    else {
+        return strcmp(self->data, string->data) == 0;
+    }
 }
 
 bool equalsCharArray(String *self, char array[]) {
-    return strcmp(self->data, array) == 0;
+    if (self == NULL && array == NULL) {
+        return true;
+    }
+    else if (self == NULL || array == NULL) {
+        return false;
+    }
+    else {
+        return strcmp(self->data, array) == 0;
+    }
 }
 
 void append(String *self, char c) {

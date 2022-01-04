@@ -11,7 +11,7 @@ void printScalar(Printer *self, Scalar *scalar, FILE *file) {
     if (scalar->hasSequences) {
         self->printChainList(self, scalar->sequences, file);
     } else {
-        if (!scalar->data->equalsCharArray(scalar->data, "START")) {
+        if (!scalar->isRoot) {
             fputs(scalar->data->data, file);
             if (scalar->next != NULL && (scalar->next->isValue || scalar->next->hasSequences))
                 fputc('=', file);
@@ -31,7 +31,7 @@ void printChain(Printer *self, Chain *chain, FILE *file) {
         self->printScalar(self, scalar, file);
         scalar = scalar->next;
     }
-    if (chain->front(chain)->data->equalsCharArray(chain->front(chain)->data, "START"))
+    if (chain->front(chain)->isRoot)
         fputc('\n', file);
 }
 
@@ -39,8 +39,7 @@ void printChainList(Printer *self, ChainList *chainList, FILE *file) {
     if (chainList == NULL) {
         return;
     }
-    bool isRoot = chainList->data[0]->front(chainList->data[0])->data->equalsCharArray(
-            chainList->data[0]->front(chainList->data[0])->data, "START");
+    bool isRoot = chainList->data[0]->front(chainList->data[0])->isRoot;
     if (!isRoot) {
         fputc('{', file);
     }

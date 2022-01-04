@@ -27,8 +27,9 @@ Scalar *getScalarCopy(Scalar *self) {
     scalar->data = stringConstructor();
     scalar->data->setData(scalar->data, self->data->data);
     scalar->sequences = chainListConstructor();
-    scalar->isValue = false;
-    scalar->hasSequences = false;
+    scalar->isValue = self->isValue;
+    scalar->isRoot = self->isRoot;
+    scalar->hasSequences = self->hasSequences;
 
     scalar->debugScalar = debugScalar;
     scalar->getScalarCopy = getScalarCopy;
@@ -45,6 +46,7 @@ Scalar *scalarConstructor(char *data) {
     scalar->sequences = chainListConstructor();
     scalar->isValue = false;
     scalar->hasSequences = false;
+    scalar->isRoot = false;
     scalar->debugScalar = debugScalar;
     scalar->getScalarCopy = getScalarCopy;
     return scalar;

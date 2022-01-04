@@ -30,6 +30,7 @@ Chain *getChainCopy(Chain *self) {
         newChain->push_back(newChain, curScalar->data->data);
         newChain->back_tail->isValue = curScalar->isValue;
         newChain->back_tail->hasSequences = curScalar->hasSequences;
+        newChain->back_tail->isRoot = curScalar->isRoot;
         newChain->back_tail->sequences = curScalar->sequences->getChainListCopy(curScalar->sequences);
         curScalar = curScalar->next;
     }
