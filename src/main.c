@@ -58,6 +58,14 @@ void interactive() {
     yamlParserDestructor(yamlParser);
 }
 
+void help() {
+    printf("YAML2Prop - tool, to convert your YAML to Java properties file\n");
+    printf("Usage:\n\tYaml2Prop [file] [option]\n\n");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop", "open interactive mode");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file", "parse file and print it to display");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -o path_to_output", "parse file and save output");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop -h", "print help");
+}
 
 int main(int argNumber, char** args) {
     if (argNumber == 1) {
@@ -80,6 +88,10 @@ int main(int argNumber, char** args) {
 
                 case 1:
                     interactive();
+                    break;
+
+                case 2:
+                    help();
                     break;
 
                 default:
