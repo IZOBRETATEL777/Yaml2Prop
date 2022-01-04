@@ -8,13 +8,14 @@
 #include <stdio.h>
 
 struct Visualizer {
-    char* file;
-    int (*visualize)(struct Visualizer* );
+    char *file;
+
+    int (*visualize)(struct Visualizer *);
 };
 
 typedef struct Visualizer Visualizer;
 
-Visualizer *visualizerConstructor(char* );
+Visualizer *visualizerConstructor(char *);
 
 void visualizerDestructor(Visualizer *self);
 

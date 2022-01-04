@@ -9,18 +9,18 @@ void interactive() {
     printf("Enter path to the source file:\n");
     char path[500];
     memset(path, 0, sizeof(path));
-    scanf (" %[^\n]s", path);
-    FILE* in = fopen(path, "r");
+    scanf(" %[^\n]s", path);
+    FILE *in = fopen(path, "r");
     if (in == NULL) {
         printf("Error while opening source file. Try again.\n");
         interactive();
         return;
     }
-    YamlParser* yamlParser = yamlParserConstructor(in);
-    ChainList* parsed = yamlParser->parse(yamlParser);
-    PropertiesOutput* propertiesOutput = NULL;
-    Visualizer* visualizer = NULL;
-    FILE* out = NULL;
+    YamlParser *yamlParser = yamlParserConstructor(in);
+    ChainList *parsed = yamlParser->parse(yamlParser);
+    PropertiesOutput *propertiesOutput = NULL;
+    Visualizer *visualizer = NULL;
+    FILE *out = NULL;
     fclose(in);
     bool go = true;
     printf("What to do?\n");
@@ -39,7 +39,7 @@ void interactive() {
                 printf("Enter path to the destination file:\n");
                 char dest[500];
                 memset(dest, 0, sizeof(dest));
-                scanf (" %[^\n]s", dest);
+                scanf(" %[^\n]s", dest);
                 out = fopen(dest, "w");
                 if (out == NULL) {
                     printf("Error while opening destination file. Try again.\n");
@@ -60,6 +60,7 @@ void interactive() {
                     printf("Error while visualizing. Please, be sure that PlantUML is available.\n");
                 else
                     printf("Ready.\n");
+                visualizerDestructor(visualizer);
                 break;
             default:
                 printf("No command found. Try again.\n");
@@ -74,19 +75,20 @@ void help() {
     printf("Usage:\n\tYaml2Prop [file] [option]\n\n");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop", "open interactive mode");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file", "parse file and print it to display");
-    printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -v", "create a visualization image. Plantuml.jar in the same directory with this program and JRE are required.");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -v",
+           "create a visualization image. Plantuml.jar in the same directory with this program and JRE are required.");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -o path_to_output", "parse file and save output");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop -h", "print help");
 }
 
-void cli(int argNumber, char** args) {
-    FILE* in = NULL;
-    FILE* out = NULL;
-    YamlParser* yamlParser = NULL;
-    ChainList* parsed = NULL;
-    PropertiesOutput* propertiesOutput = NULL;
-    Visualizer* visualizer = NULL;
-    if (argNumber <=4 && argNumber >= 2) {
+void cli(int argNumber, char **args) {
+    FILE *in = NULL;
+    FILE *out = NULL;
+    YamlParser *yamlParser = NULL;
+    ChainList *parsed = NULL;
+    PropertiesOutput *propertiesOutput = NULL;
+    Visualizer *visualizer = NULL;
+    if (argNumber <= 4 && argNumber >= 2) {
         if (strcmp(args[1], "-h") == 0 && argNumber == 2) {
             help();
             return;
@@ -99,7 +101,7 @@ void cli(int argNumber, char** args) {
         yamlParser = yamlParserConstructor(in);
         parsed = yamlParser->parse(yamlParser);
         fclose(in);
-        if(argNumber == 4 && strcmp(args[2], "-o") == 0) {
+        if (argNumber == 4 && strcmp(args[2], "-o") == 0) {
             out = fopen(args[3], "w");
             propertiesOutput = propertiesOutputConstructor(out, parsed);
             propertiesOutput->printToOutput(propertiesOutput);
@@ -108,8 +110,7 @@ void cli(int argNumber, char** args) {
             chainListDestructor(parsed);
             propertiesOutputDestructor(propertiesOutput);
             return;
-        }
-        else if (argNumber == 3 && strcmp(args[2], "-v") == 0) {
+        } else if (argNumber == 3 && strcmp(args[2], "-v") == 0) {
             visualizer = visualizerConstructor(args[1]);
             if (visualizer->visualize(visualizer) != 0)
                 printf("Error while visualizing. Please, be sure that PlantUML is available.\n");
@@ -117,24 +118,21 @@ void cli(int argNumber, char** args) {
                 printf("Ready.\n");
             visualizerDestructor(visualizer);
             return;
-        }
-
-        else if (argNumber == 2) {
+        } else if (argNumber == 2) {
             propertiesOutput = propertiesOutputConstructor(stdout, parsed);
             propertiesOutput->printToOutput(propertiesOutput);
             yamlParserDestructor(yamlParser);
             chainListDestructor(parsed);
             propertiesOutputDestructor(propertiesOutput);
             return;
-        }
-        else {
+        } else {
             printf("Error!\nRun with -h to get help.\n");
             return;
         }
     }
 }
 
-int main(int argNumber, char** args) {
+int main(int argNumber, char **args) {
     if (argNumber == 1) {
         printf("Welcome to YAML2Prop!\n");
         bool go = true;
@@ -166,8 +164,7 @@ int main(int argNumber, char** args) {
             }
 
         }
-    }
-    else{
+    } else {
         cli(argNumber, args);
     }
     return 0;

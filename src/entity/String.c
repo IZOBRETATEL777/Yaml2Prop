@@ -41,11 +41,9 @@ void print(String *self, FILE *out, char sep[], char end[]) {
 bool equals(String *self, String *string) {
     if (string == NULL && self == NULL) {
         return true;
-    }
-    else if (string == NULL || self == NULL) {
+    } else if (string == NULL || self == NULL) {
         return false;
-    }
-    else {
+    } else {
         return strcmp(self->data, string->data) == 0;
     }
 }
@@ -53,11 +51,9 @@ bool equals(String *self, String *string) {
 bool equalsCharArray(String *self, char array[]) {
     if (self == NULL && array == NULL) {
         return true;
-    }
-    else if (self == NULL || array == NULL) {
+    } else if (self == NULL || array == NULL) {
         return false;
-    }
-    else {
+    } else {
         return strcmp(self->data, array) == 0;
     }
 }

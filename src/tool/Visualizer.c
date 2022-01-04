@@ -27,7 +27,7 @@ int fileCopy(char source[], char destination[]) {
     return 0;
 }
 
-int visualize(Visualizer* self) {
+int visualize(Visualizer *self) {
     char suf[500];
     strcpy(suf, self->file);
     char pref[512];
@@ -45,15 +45,15 @@ int visualize(Visualizer* self) {
     return res;
 }
 
-Visualizer *visualizerConstructor(char* file) {
-    Visualizer* visualizer = (Visualizer*) malloc(sizeof(Visualizer));
+Visualizer *visualizerConstructor(char *file) {
+    Visualizer *visualizer = (Visualizer *) malloc(sizeof(Visualizer));
     visualizer->file = file;
     visualizer->visualize = visualize;
     return visualizer;
 }
 
 void visualizerDestructor(Visualizer *self) {
-    if(self != NULL) {
+    if (self != NULL) {
         free(self);
     }
 }
