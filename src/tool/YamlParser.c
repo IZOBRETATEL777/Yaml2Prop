@@ -8,7 +8,7 @@
 #include "../entity/ChainList.h"
 #include "../exception/Error.h"
 #include <stdlib.h>
-#include <yaml.h>
+#include "yaml.h"
 
 void parsing(yaml_parser_t *parser, yaml_token_t *token,
              Error *errorStream, Chain *chain, bool isSequence, bool isValue, ChainList *chainList, bool inRec) {

@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 3.20)
 project(Yaml2Prop C)
 
 set(CMAKE_C_STANDARD 11)
-
-add_executable(Yaml2Prop src/main.c src/entity/String.c src/entity/String.h src/tool/YamlParser.c src/tool/YamlParser.h src/entity/Scalar.c src/entity/Scalar.h src/entity/Chain.c src/entity/Chain.h src/entity/ChainList.c src/entity/ChainList.h src/tool/PropertiesOutput.c src/tool/PropertiesOutput.h src/tool/Printer.c src/tool/Printer.h src/exception/Error.c src/exception/Error.h)
-target_link_libraries (Yaml2Prop yaml)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+add_subdirectory(src/lib/libyaml)
+add_executable(Yaml2Prop
+        src/main.c
+        src/entity/String.c
+        src/tool/YamlParser.c
+        src/entity/Scalar.c
+        src/entity/Chain.c
+        src/entity/ChainList.c
+        src/tool/PropertiesOutput.c
+        src/tool/Printer.c
+        src/exception/Error.c
+        )
+target_link_libraries(Yaml2Prop yaml)
