@@ -118,6 +118,9 @@ ChainList *parse(YamlParser *self) {
 
     Error *error = errorConstructor();
     parsing(&parser, &token, error, chain, 0, 0, chainList, false);
+    if (!chain->empty(chain)) {
+        error->printWarning("Empty values in mapping was found");
+    }
     error->printInfo("Completed!");
     chainDestructor(chain);
     errorDestructor(error);

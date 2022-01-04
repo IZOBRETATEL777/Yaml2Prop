@@ -39,7 +39,10 @@ void printChainList(Printer *self, ChainList *chainList, FILE *file) {
     if (chainList == NULL) {
         return;
     }
-    bool isRoot = chainList->data[0]->front(chainList->data[0])->isRoot;
+    bool isRoot = true;
+    if (chainList->length != 0) {
+        isRoot = chainList->data[0]->front(chainList->data[0])->isRoot;
+    }
     if (!isRoot) {
         fputc('{', file);
     }
