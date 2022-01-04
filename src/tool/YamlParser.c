@@ -6,12 +6,12 @@
 #include "../entity/Scalar.h"
 #include "../entity/Chain.h"
 #include "../entity/ChainList.h"
+#include "../exception/Error.h"
 #include <stdlib.h>
 #include <yaml.h>
 
-void
-parsing(yaml_parser_t *parser, yaml_token_t *token, Chain *chain, bool isSequence, bool isValue, ChainList *chainList,
-        bool inRec) {
+void parsing(yaml_parser_t *parser, yaml_token_t *token,
+             Error *errorStream, Chain *chain, bool isSequence, bool isValue, ChainList *chainList, bool inRec) {
     if (token->type == YAML_STREAM_END_TOKEN)
         return;
     if (!inRec) {
@@ -19,7 +19,16 @@ parsing(yaml_parser_t *parser, yaml_token_t *token, Chain *chain, bool isSequenc
     }
     switch (token->type) {
 
-        /* Stream start/end */
+        /* Errors */
+        case YAML_SCANNER_ERROR:
+            errorStream->printError("Scanner error");
+            break;
+
+        case YAML_PARSER_ERROR:
+            errorStream->printError("Parser error");
+            break;
+
+            /* Stream start/end */
         case YAML_STREAM_START_TOKEN:
             break;
 
@@ -71,7 +80,7 @@ parsing(yaml_parser_t *parser, yaml_token_t *token, Chain *chain, bool isSequenc
                 Chain *subChain = chainConstructor();
                 ChainList *subChainList = chainListConstructor();
                 do {
-                    parsing(parser, token, subChain, false, isValue, subChainList, true);
+                    parsing(parser, token, errorStream, subChain, false, isValue, subChainList, true);
                 } while (token->type != YAML_BLOCK_END_TOKEN);
                 chain->back(chain)->hasSequences = true;
                 chain->back(chain)->sequences = subChainList;
@@ -86,12 +95,12 @@ parsing(yaml_parser_t *parser, yaml_token_t *token, Chain *chain, bool isSequenc
 
             /* Others */
         default:
-            printf("Got token of type %d\n", token->type);
+            errorStream->printWarning("Undefined event during parsing");
     }
     if (token->type != YAML_STREAM_END_TOKEN) {
         yaml_token_delete(token);
     }
-    parsing(parser, token, chain, isSequence, isValue, chainList, false);
+    parsing(parser, token, errorStream, chain, isSequence, isValue, chainList, false);
 }
 
 ChainList *parse(YamlParser *self) {
@@ -106,8 +115,11 @@ ChainList *parse(YamlParser *self) {
     yaml_parser_initialize(&parser);
     yaml_parser_set_input_file(&parser, self->file);
 
-    parsing(&parser, &token, chain, 0, 0, chainList, false);
+    Error *error = errorConstructor();
+    parsing(&parser, &token, error, chain, 0, 0, chainList, false);
+    error->printInfo("Completed!");
     chainDestructor(chain);
+    errorDestructor(error);
     yaml_token_delete(&token);
     yaml_parser_delete(&parser);
     return chainList;

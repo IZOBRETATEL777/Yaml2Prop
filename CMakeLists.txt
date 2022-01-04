@@ -3,5 +3,5 @@ project(Yaml2Prop C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Yaml2Prop src/main.c src/entity/String.c src/entity/String.h src/tool/YamlParser.c src/tool/YamlParser.h src/entity/Scalar.c src/entity/Scalar.h src/entity/Chain.c src/entity/Chain.h src/entity/ChainList.c src/entity/ChainList.h src/tool/PropertiesOutput.c src/tool/PropertiesOutput.h src/tool/Printer.c src/tool/Printer.h)
+add_executable(Yaml2Prop src/main.c src/entity/String.c src/entity/String.h src/tool/YamlParser.c src/tool/YamlParser.h src/entity/Scalar.c src/entity/Scalar.h src/entity/Chain.c src/entity/Chain.h src/entity/ChainList.c src/entity/ChainList.h src/tool/PropertiesOutput.c src/tool/PropertiesOutput.h src/tool/Printer.c src/tool/Printer.h src/exception/Error.c src/exception/Error.h)
 target_link_libraries (Yaml2Prop yaml)
