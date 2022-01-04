@@ -6,7 +6,7 @@
 #include "ChainList.h"
 #include <stdlib.h>
 
-void debugScalar(Scalar* self) {
+void debugScalar(Scalar *self) {
     if (self == NULL) {
         return;
     }
@@ -17,11 +17,11 @@ void debugScalar(Scalar* self) {
     }
 }
 
-Scalar* getScalarCopy(Scalar* self) {
+Scalar *getScalarCopy(Scalar *self) {
     if (self == NULL) {
         return NULL;
     }
-    Scalar *scalar = (Scalar* )malloc(sizeof(Scalar));
+    Scalar *scalar = (Scalar *) malloc(sizeof(Scalar));
     scalar->next = self->next;
     scalar->prev = self->prev;
     scalar->data = stringConstructor();
@@ -36,8 +36,8 @@ Scalar* getScalarCopy(Scalar* self) {
     return scalar;
 }
 
-Scalar* scalarConstructor(char* data) {
-    Scalar *scalar = (Scalar* )malloc(sizeof(Scalar));
+Scalar *scalarConstructor(char *data) {
+    Scalar *scalar = (Scalar *) malloc(sizeof(Scalar));
     scalar->next = NULL;
     scalar->prev = NULL;
     scalar->data = stringConstructor();
@@ -50,7 +50,7 @@ Scalar* scalarConstructor(char* data) {
     return scalar;
 }
 
-void scalarDestructor(Scalar* self) {
+void scalarDestructor(Scalar *self) {
     if (self != NULL) {
         free(self);
     }

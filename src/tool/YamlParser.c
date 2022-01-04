@@ -9,7 +9,9 @@
 #include <stdlib.h>
 #include <yaml.h>
 
-void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSequence, bool isValue, ChainList* chainList, bool inRec) {
+void
+parsing(yaml_parser_t *parser, yaml_token_t *token, Chain *chain, bool isSequence, bool isValue, ChainList *chainList,
+        bool inRec) {
     if (token->type == YAML_STREAM_END_TOKEN)
         return;
     if (!inRec) {
@@ -19,11 +21,9 @@ void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSe
 
         /* Stream start/end */
         case YAML_STREAM_START_TOKEN:
-//            puts("STREAM START");
             break;
 
         case YAML_STREAM_END_TOKEN:
-//            puts("STREAM END");
             break;
 
             /* Token types (read before actual token) */
@@ -37,52 +37,39 @@ void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSe
 
             /* Block delimeters */
         case YAML_BLOCK_SEQUENCE_START_TOKEN:
-//            puts("<b>Start Block (Sequence)</b>");
             isSequence = true;
             break;
 
         case YAML_BLOCK_ENTRY_TOKEN:
-//            puts("<b>Start Block (Entry)</b>");
             break;
 
         case YAML_BLOCK_END_TOKEN:
-//            puts("End block");
-//            chain->debugChain(chain);
-
-
             if (isSequence)
                 isSequence = false;
             chain->pop_back(chain);
-//            puts("POP!");
             if (chain->empty(chain)) {
                 return;
             }
-//            chain->debugChain(chain);
             break;
 
             /* Data */
         case YAML_BLOCK_MAPPING_START_TOKEN:
-//            puts("[Block mapping]");
             break;
 
         case YAML_SCALAR_TOKEN:
-//            printf("%s is value? %d\n",token->data.scalar.value, isValue);
             if (!isSequence) {
                 chain->push_back(chain, token->data.scalar.value);
                 chain->back(chain)->isValue = isValue;
                 if (isValue) {
                     chainList->add(chainList, chain);
-//                    puts("POP!");
                     chain->pop_back(chain);
-//                    puts("POP!");
                     chain->pop_back(chain);
                 }
-            }
-            else {
+            } else {
                 chain->push_back(chain, "SEQ");
 
-                Chain* subChain = chainConstructor();
-                ChainList* subChainList = chainListConstructor();
+                Chain *subChain = chainConstructor();
+                ChainList *subChainList = chainListConstructor();
                 do {
                     parsing(parser, token, subChain, false, isValue, subChainList, true);
                 } while (token->type != YAML_BLOCK_END_TOKEN);
@@ -107,10 +94,10 @@ void parsing(yaml_parser_t* parser, yaml_token_t* token, Chain* chain, bool isSe
     parsing(parser, token, chain, isSequence, isValue, chainList, false);
 }
 
-ChainList* parse(YamlParser* self) {
+ChainList *parse(YamlParser *self) {
 
-    ChainList* chainList = chainListConstructor();
-    Chain* chain = chainConstructor();
+    ChainList *chainList = chainListConstructor();
+    Chain *chain = chainConstructor();
     chain->push_back(chain, "START");
 
     yaml_parser_t parser;

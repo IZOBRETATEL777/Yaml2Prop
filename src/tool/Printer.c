@@ -4,14 +4,13 @@
 
 #include "Printer.h"
 
-void printScalar(Printer* self, Scalar* scalar, FILE* file) {
+void printScalar(Printer *self, Scalar *scalar, FILE *file) {
     if (scalar == NULL) {
         return;
     }
     if (scalar->hasSequences) {
         self->printChainList(self, scalar->sequences, file);
-    }
-    else {
+    } else {
         if (!scalar->data->equalsCharArray(scalar->data, "START")) {
             fputs(scalar->data->data, file);
             if (scalar->next != NULL && (scalar->next->isValue || scalar->next->hasSequences))
@@ -22,7 +21,8 @@ void printScalar(Printer* self, Scalar* scalar, FILE* file) {
     }
 
 }
-void printChain (Printer* self, Chain* chain, FILE* file) {
+
+void printChain(Printer *self, Chain *chain, FILE *file) {
     if (chain == NULL) {
         return;
     }
@@ -35,11 +35,12 @@ void printChain (Printer* self, Chain* chain, FILE* file) {
         fputc('\n', file);
 }
 
-void printChainList (Printer* self, ChainList* chainList, FILE* file){
+void printChainList(Printer *self, ChainList *chainList, FILE *file) {
     if (chainList == NULL) {
         return;
     }
-    bool isRoot = chainList->data[0]->front(chainList->data[0])->data->equalsCharArray(chainList->data[0]->front(chainList->data[0])->data, "START");
+    bool isRoot = chainList->data[0]->front(chainList->data[0])->data->equalsCharArray(
+            chainList->data[0]->front(chainList->data[0])->data, "START");
     if (!isRoot) {
         fputc('{', file);
     }
@@ -55,13 +56,14 @@ void printChainList (Printer* self, ChainList* chainList, FILE* file){
     }
 }
 
-Printer* printerConstructor() {
-    Printer* printer = (Printer*) malloc(sizeof(Printer));
+Printer *printerConstructor() {
+    Printer *printer = (Printer *) malloc(sizeof(Printer));
     printer->printScalar = printScalar;
     printer->printChain = printChain;
     printer->printChainList = printChainList;
     return printer;
 }
-void printerDestructor(Printer* self) {
+
+void printerDestructor(Printer *self) {
     free(self);
 }

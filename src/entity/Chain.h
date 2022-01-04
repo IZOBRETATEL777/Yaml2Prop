@@ -9,24 +9,33 @@
 #include <stdbool.h>
 
 struct Chain {
-    Scalar* front_tail;
-    Scalar* back_tail;
+    Scalar *front_tail;
+    Scalar *back_tail;
 
-    bool (*empty)(struct Chain*);
-    Scalar* (*back)(struct Chain*);
-    Scalar* (*front)(struct Chain*);
-    void (*pop_front)(struct Chain*);
-    void (*pop_back)(struct Chain*);
-    void (*push_front)(struct Chain*, char*);
-    void (*push_back)(struct Chain*, char*);
-    struct Chain* (*getChainCopy)(struct Chain*);
-    void (*debugChain) (struct Chain*);
+    bool (*empty)(struct Chain *);
+
+    Scalar *(*back)(struct Chain *);
+
+    Scalar *(*front)(struct Chain *);
+
+    void (*pop_front)(struct Chain *);
+
+    void (*pop_back)(struct Chain *);
+
+    void (*push_front)(struct Chain *, char *);
+
+    void (*push_back)(struct Chain *, char *);
+
+    struct Chain *(*getChainCopy)(struct Chain *);
+
+    void (*debugChain)(struct Chain *);
 };
 
 typedef struct Chain Chain;
 
-Chain* chainConstructor();
-void chainDestructor(Chain* self);
+Chain *chainConstructor();
+
+void chainDestructor(Chain *self);
 
 
 #endif //YAML2PROP_CHAIN_H

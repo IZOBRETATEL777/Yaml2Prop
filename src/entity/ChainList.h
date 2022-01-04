@@ -11,12 +11,19 @@
 struct ChainList {
     size_t length;
     size_t capacity;
-    Chain** data;
-    void (*add) (struct ChainList*, Chain*);
-    void (*debugChainList) (struct ChainList*);
-    struct  ChainList* (*getChainListCopy) (struct ChainList*);
+    Chain **data;
+
+    void (*add)(struct ChainList *, Chain *);
+
+    void (*debugChainList)(struct ChainList *);
+
+    struct ChainList *(*getChainListCopy)(struct ChainList *);
 };
+
 typedef struct ChainList ChainList;
-ChainList* chainListConstructor();
-void chainListDestructor(ChainList* self);
+
+ChainList *chainListConstructor();
+
+void chainListDestructor(ChainList *self);
+
 #endif //YAML2PROP_CHAINLIST_H

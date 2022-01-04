@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void debugChain(Chain* self) {
+void debugChain(Chain *self) {
     if (self == NULL) {
         printf("_______\n");
         return;
@@ -20,11 +20,11 @@ void debugChain(Chain* self) {
     printf("_______end_chain\n");
 }
 
-Chain* getChainCopy(Chain* self) {
+Chain *getChainCopy(Chain *self) {
     if (self == NULL) {
         return NULL;
     }
-    Chain* newChain = chainConstructor();
+    Chain *newChain = chainConstructor();
     Scalar *curScalar = self->front_tail;
     while (curScalar != NULL) {
         newChain->push_back(newChain, curScalar->data->data);
@@ -36,80 +36,70 @@ Chain* getChainCopy(Chain* self) {
     return newChain;
 }
 
-bool empty(Chain* self) {
+bool empty(Chain *self) {
     return (self->front_tail == NULL || self->back_tail == NULL);
 }
 
-void push_front(Chain* self, char* data) {
-//	debugChain(self);
-    Scalar* scalar = scalarConstructor(data);
+void push_front(Chain *self, char *data) {
+    Scalar *scalar = scalarConstructor(data);
     if (empty(self)) {
         self->front_tail = scalar;
         self->back_tail = scalar;
-    }
-    else {
+    } else {
         scalar->next = self->front_tail;
         self->front_tail->prev = scalar;
         self->front_tail = scalar;
     }
-//	debugChain(self);
 }
 
-void push_back(Chain* self, char* data) {
-//	debugChain(self);
-    Scalar* scalar = scalarConstructor(data);
+void push_back(Chain *self, char *data) {
+    Scalar *scalar = scalarConstructor(data);
     if (empty(self)) {
         self->front_tail = scalar;
         self->back_tail = scalar;
-    }
-    else {
+    } else {
         scalar->prev = self->back_tail;
         self->back_tail->next = scalar;
         self->back_tail = scalar;
     }
-//	debugChain(self);
 }
 
-Scalar* front(Chain* self) {
+Scalar *front(Chain *self) {
     return self->front_tail;
 }
 
-Scalar* back(Chain* self) {
+Scalar *back(Chain *self) {
     return self->back_tail;
 }
 
-void pop_front(Chain* self) {
-//	debugChain(self);
+void pop_front(Chain *self) {
     if (empty(self)) {
         return;
     }
-    Scalar* scalar = self->front_tail;
+    Scalar *scalar = self->front_tail;
     self->front_tail = scalar->next;
     if (self->front_tail == NULL)
         self->back_tail = NULL;
     else
         self->front_tail->prev = NULL;
     free(scalar);
-//    debugChain(self);
 }
 
-void pop_back(Chain* self) {
-//    debugChain(self);
+void pop_back(Chain *self) {
     if (empty(self)) {
         return;
     }
-    Scalar* scalar = self->back_tail;
+    Scalar *scalar = self->back_tail;
     self->back_tail = scalar->prev;
     if (self->back_tail == NULL)
         self->front_tail = NULL;
     else
         self->back_tail->next = NULL;
     free(scalar);
-//	debugChain(self);
 }
 
-Chain* chainConstructor() {
-    Chain* self = (Chain*)malloc(sizeof(Chain));
+Chain *chainConstructor() {
+    Chain *self = (Chain *) malloc(sizeof(Chain));
     self->back_tail = NULL;
     self->front_tail = NULL;
     self->pop_back = pop_back;
@@ -124,7 +114,7 @@ Chain* chainConstructor() {
     return self;
 }
 
-void chainDestructor(Chain* self) {
+void chainDestructor(Chain *self) {
     if (self == NULL)
         return;
 

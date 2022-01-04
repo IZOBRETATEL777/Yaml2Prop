@@ -7,16 +7,22 @@
 #include "String.h"
 
 struct Scalar {
-    String* data;
+    String *data;
     bool isValue;
     bool hasSequences;
-    struct Scalar* prev;
-    struct Scalar* next;
-    struct ChainList* sequences;
-    void (*debugScalar) (struct Scalar*);
-    struct Scalar* (*getScalarCopy) (struct Scalar*);
+    struct Scalar *prev;
+    struct Scalar *next;
+    struct ChainList *sequences;
+
+    void (*debugScalar)(struct Scalar *);
+
+    struct Scalar *(*getScalarCopy)(struct Scalar *);
 };
+
 typedef struct Scalar Scalar;
-Scalar* scalarConstructor(char* data);
-void scalarDestructor(Scalar* self);
+
+Scalar *scalarConstructor(char *data);
+
+void scalarDestructor(Scalar *self);
+
 #endif //YAML2PROP_SCALAR_H

@@ -10,11 +10,17 @@
 #include "../entity/ChainList.h"
 
 struct Printer {
-    void (*printScalar) (struct Printer*, Scalar*, FILE*);
-    void (*printChain) (struct Printer*, Chain*, FILE*);
-    void (*printChainList) (struct Printer*, ChainList*, FILE*);
+    void (*printScalar)(struct Printer *, Scalar *, FILE *);
+
+    void (*printChain)(struct Printer *, Chain *, FILE *);
+
+    void (*printChainList)(struct Printer *, ChainList *, FILE *);
 };
+
 typedef struct Printer Printer;
-Printer* printerConstructor();
-void printerDestructor(Printer* self);
+
+Printer *printerConstructor();
+
+void printerDestructor(Printer *self);
+
 #endif //YAML2PROP_PRINTER_H
