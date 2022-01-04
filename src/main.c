@@ -85,12 +85,12 @@ void cli(int argNumber, char** args) {
     YamlParser* yamlParser = NULL;
     ChainList* parsed = NULL;
     PropertiesOutput* propertiesOutput = NULL;
-    if (argNumber == 2 || argNumber == 4) {
+    Visualizer* visualizer = NULL;
+    if (argNumber <=4 && argNumber >= 2) {
         if (strcmp(args[1], "-h") == 0 && argNumber == 2) {
             help();
             return;
         }
-        char* arg = args[1];
         in = fopen(args[1], "r");
         if (in == NULL) {
             printf("Error while opening source file. Try again.\n");
@@ -109,6 +109,16 @@ void cli(int argNumber, char** args) {
             propertiesOutputDestructor(propertiesOutput);
             return;
         }
+        else if (argNumber == 3 && strcmp(args[2], "-v") == 0) {
+            visualizer = visualizerConstructor(args[1]);
+            if (visualizer->visualize(visualizer) != 0)
+                printf("Error while visualizing. Please, be sure that PlantUML is available.\n");
+            else
+                printf("Ready.\n");
+            visualizerDestructor(visualizer);
+            return;
+        }
+
         else if (argNumber == 2) {
             propertiesOutput = propertiesOutputConstructor(stdout, parsed);
             propertiesOutput->printToOutput(propertiesOutput);
