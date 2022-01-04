@@ -2,11 +2,11 @@
 // Created by izobretatel777 on 04/01/2022.
 //
 
-#include <stdio.h>
-#include "../entity/ChainList.h"
-
 #ifndef YAML2PROP_PROPERTIESOUTPUT_H
 #define YAML2PROP_PROPERTIESOUTPUT_H
+
+#include <stdio.h>
+#include "../entity/ChainList.h"
 
 struct PropertiesOutput {
     FILE *file;

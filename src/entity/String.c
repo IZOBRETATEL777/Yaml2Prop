@@ -105,6 +105,8 @@ String *stringConstructor() {
 }
 
 void stringDestructor(String *self) {
+    if (self == NULL)
+        return;
     if (self->data != NULL) {
         free(self->data);
     }

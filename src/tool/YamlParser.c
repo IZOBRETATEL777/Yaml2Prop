@@ -137,5 +137,7 @@ YamlParser *yamlParserConstructor(FILE *file) {
 }
 
 void yamlParserDestructor(YamlParser *yamlParser) {
-    free(yamlParser);
+    if (yamlParser != NULL) {
+        free(yamlParser);
+    }
 }
