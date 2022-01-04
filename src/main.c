@@ -67,6 +67,51 @@ void help() {
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop -h", "print help");
 }
 
+void cli(int argNumber, char** args) {
+    FILE* in = NULL;
+    FILE* out = NULL;
+    YamlParser* yamlParser = NULL;
+    ChainList* parsed = NULL;
+    PropertiesOutput* propertiesOutput = NULL;
+    if (argNumber == 2 || argNumber == 4) {
+        if (strcmp(args[1], "-h") == 0 && argNumber == 2) {
+            help();
+            return;
+        }
+        char* arg = args[1];
+        in = fopen(args[1], "r");
+        if (in == NULL) {
+            printf("Error while opening source file. Try again.\n");
+            return;
+        }
+        yamlParser = yamlParserConstructor(in);
+        parsed = yamlParser->parse(yamlParser);
+        fclose(in);
+        if(argNumber == 4 && strcmp(args[2], "-o") == 0) {
+            out = fopen(args[3], "w");
+            propertiesOutput = propertiesOutputConstructor(out, parsed);
+            propertiesOutput->printToOutput(propertiesOutput);
+            fclose(out);
+            yamlParserDestructor(yamlParser);
+            chainListDestructor(parsed);
+            propertiesOutputDestructor(propertiesOutput);
+            return;
+        }
+        else if (argNumber == 2) {
+            propertiesOutput = propertiesOutputConstructor(stdout, parsed);
+            propertiesOutput->printToOutput(propertiesOutput);
+            yamlParserDestructor(yamlParser);
+            chainListDestructor(parsed);
+            propertiesOutputDestructor(propertiesOutput);
+            return;
+        }
+        else {
+            printf("Error!\nRun with -h to get help.\n");
+            return;
+        }
+    }
+}
+
 int main(int argNumber, char** args) {
     if (argNumber == 1) {
         printf("Welcome to YAML2Prop!\n");
@@ -100,8 +145,8 @@ int main(int argNumber, char** args) {
 
         }
     }
-    else if (argNumber == 2) {
-        char* path = args[1];
+    else{
+        cli(argNumber, args);
     }
     return 0;
 }
