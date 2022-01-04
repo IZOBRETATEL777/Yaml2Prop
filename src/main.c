@@ -74,6 +74,7 @@ void help() {
     printf("Usage:\n\tYaml2Prop [file] [option]\n\n");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop", "open interactive mode");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file", "parse file and print it to display");
+    printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -v", "create a visualization image. Plantuml.jar in the same directory with this program and JRE are required.");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop path_to_file -o path_to_output", "parse file and save output");
     printf("\t%-40s\t-\t%s\n", "Yaml2Prop -h", "print help");
 }
