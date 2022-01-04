@@ -28,13 +28,13 @@ jobs:
       - name: Build Linux executable
         if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'
         run: |
-          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake . -DCMAKE_BUILD_TYPE=Release
           cmake --build . --config Release -j4
 
       - name: Build Windows executable
         if: matrix.os == 'windows-latest'
         run: |
-          cmake .. -A ${{ matrix.config.platform }}
+          cmake . -A ${{ matrix.config.platform }}
           cmake --build . --config Release -j4
 
       - name: Create Linux executable release
