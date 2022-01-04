@@ -67,5 +67,7 @@ Printer *printerConstructor() {
 }
 
 void printerDestructor(Printer *self) {
-    free(self);
+    if (self != NULL) {
+        free(self);
+    }
 }

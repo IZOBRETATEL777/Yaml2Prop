@@ -121,7 +121,7 @@ ChainList *parse(YamlParser *self) {
     if (!chain->empty(chain)) {
         error->printWarning("Empty values in mapping was found");
     }
-    error->printInfo("Completed!");
+    error->printInfo("Parsing completed!");
     chainDestructor(chain);
     errorDestructor(error);
     yaml_token_delete(&token);

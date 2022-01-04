@@ -20,5 +20,8 @@ PropertiesOutput *propertiesOutputConstructor(FILE *file, ChainList *chainList) 
 }
 
 void propertiesOutputDestructor(PropertiesOutput *self) {
-    free(self);
+    if (self != NULL) {
+        fflush(self->file);
+        free(self);
+    }
 };
