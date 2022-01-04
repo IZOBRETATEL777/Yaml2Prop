@@ -1,6 +1,7 @@
 #include "tool/YamlParser.h"
 #include "entity/ChainList.h"
 #include "tool/PropertiesOutput.h"
+#include "tool/Visualizer.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -18,6 +19,7 @@ void interactive() {
     YamlParser* yamlParser = yamlParserConstructor(in);
     ChainList* parsed = yamlParser->parse(yamlParser);
     PropertiesOutput* propertiesOutput = NULL;
+    Visualizer* visualizer = NULL;
     FILE* out = NULL;
     fclose(in);
     bool go = true;
@@ -25,6 +27,7 @@ void interactive() {
     while (go) {
         printf("[1] Convert to properties and print to file\n");
         printf("[2] Convert to properties and display\n");
+        printf("[3] Create visualization\n");
         printf("[0] Back\n");
         short cmd;
         scanf("%hu", &cmd);
@@ -34,9 +37,10 @@ void interactive() {
                 break;
             case 1:
                 printf("Enter path to the destination file:\n");
-                memset(path, 0, sizeof(path));
-                scanf (" %[^\n]s", path);
-                out = fopen(path, "w");
+                char dest[500];
+                memset(dest, 0, sizeof(dest));
+                scanf (" %[^\n]s", dest);
+                out = fopen(dest, "w");
                 if (out == NULL) {
                     printf("Error while opening destination file. Try again.\n");
                     break;
@@ -49,6 +53,13 @@ void interactive() {
                 propertiesOutput = propertiesOutputConstructor(stdout, parsed);
                 propertiesOutput->printToOutput(propertiesOutput);
                 propertiesOutputDestructor((propertiesOutput));
+                break;
+            case 3:
+                visualizer = visualizerConstructor(path);
+                if (visualizer->visualize(visualizer) != 0)
+                    printf("Error while visualizing. Please, be sure that PlantUML is available.\n");
+                else
+                    printf("Ready.\n");
                 break;
             default:
                 printf("No command found. Try again.\n");

@@ -14,5 +14,6 @@ add_executable(Yaml2Prop
         src/tool/PropertiesOutput.c
         src/tool/Printer.c
         src/exception/Error.c
+        src/tool/Visualizer.c
         )
 target_link_libraries(Yaml2Prop yaml)
