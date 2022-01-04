@@ -14,9 +14,9 @@ struct ChainList {
     Chain** data;
     void (*add) (struct ChainList*, Chain*);
     void (*debugChainList) (struct ChainList*);
-    struct  ChainList* (*getChainListCopy) (struct  ChainList*);
+    struct  ChainList* (*getChainListCopy) (struct ChainList*);
 };
 typedef struct ChainList ChainList;
 ChainList* chainListConstructor();
-void chainListDestructor(ChainList*);
+void chainListDestructor(ChainList* self);
 #endif //YAML2PROP_CHAINLIST_H

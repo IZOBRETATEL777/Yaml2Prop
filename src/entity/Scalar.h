@@ -14,9 +14,9 @@ struct Scalar {
     struct Scalar* next;
     struct ChainList* sequences;
     void (*debugScalar) (struct Scalar*);
-    struct Scalar* (*getScalarCopy) (struct Scalar*)
+    struct Scalar* (*getScalarCopy) (struct Scalar*);
 };
 typedef struct Scalar Scalar;
-Scalar* scalarConstructor(char*);
-void scalarDestructor(Scalar*);
+Scalar* scalarConstructor(char* data);
+void scalarDestructor(Scalar* self);
 #endif //YAML2PROP_SCALAR_H

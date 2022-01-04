@@ -25,6 +25,6 @@ struct  String {
 typedef struct String String;
 String* stringConstructor();
 void stringDestructor(String* self);
-int stringComparator(const void *a, const void *b);
+int stringComparator(const void* a, const void* b);
 
 #endif //YAML2PROP_STRING_H

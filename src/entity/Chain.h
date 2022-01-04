@@ -26,7 +26,7 @@ struct Chain {
 typedef struct Chain Chain;
 
 Chain* chainConstructor();
-void chainDestructor(Chain*);
+void chainDestructor(Chain* self);
 
 
 #endif //YAML2PROP_CHAIN_H
