@@ -48,6 +48,8 @@ Also, it is possible to use the tool with parameters:
 
 ![paramters-start](doc/paramters-start.png)
 
+For visualization be shure that jar or your PlantumUML is located in the same directory with executable as well as file that is to be presented. Latest version of PlantumUML can be downloaded [here](https://github.com/plantuml/plantuml/releases/latest/).
+
 All possible options listed in help page (parameter -h):
 
 ![help-menu](doc/help-menu.png)
