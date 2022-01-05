@@ -3,7 +3,7 @@
 #### CLI tool designed to covert [YAML](https://yaml.org/) to (Java) [.properties](https://docs.oracle.com/cd/E23095_01/Platform.93/ATGProgGuide/html/s0204propertiesfileformat01.html).
 
 Sometime, it is required to convert modern YAML formated files to old-style .properties that are still in use. This tool is written on pure C programming language with the usage of [libyaml](https://github.com/yaml/libyaml) library. Additionally it can visualize processed file using [PlantUML](https://github.com/plantuml/plantuml) library.
-
+[Whatch the presentation](https://github.com/IZOBRETATEL777/Yaml2Prop/tree/main/doc/presentation.pdf).
 
 
 ## Installation
